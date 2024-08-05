@@ -5,6 +5,16 @@ let CTX = dom_canvas.getContext("2d");
 
 window.addEventListener('keydown', this.check, false);
 
+const start = {
+    r:234,
+    g:192,
+    b:25,
+}
+const end = {
+    r:177,
+    g:126,
+    b:31,
+}
 const W = (dom_canvas.width = 500);
 const H = (dom_canvas.height = 500);
 const SW = (W / 4);
@@ -96,6 +106,13 @@ function add_boxes() {
             }
         }
     }
+}
+
+function color_change(color_value) {
+    let r = color_value / 4096 *
+    let g = 1;
+    let b = 1;
+    color_value / 4096 
 }
 random_box();
 draw_board();
