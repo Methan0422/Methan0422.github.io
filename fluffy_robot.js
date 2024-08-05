@@ -1,8 +1,9 @@
 let dom_replay = document.querySelector("#replay");
 let dom_score = document.querySelector("#score");
 let dom_canvas = document.querySelector("#canvas");
-
 let CTX = dom_canvas.getContext("2d");
+
+window.addEventListener('keydown',this.check,false);
 
 const W = (dom_canvas.width = 500);
 const H = (dom_canvas.height = 500);
@@ -36,4 +37,23 @@ function draw_board() {
     }
 }
 
+
+function check(e) {
+    var code = e.keyCode;
+    switch (code) {
+        case 37: alert("Left"); break
+        case 38: alert("Up"); break;
+        case 39: alert("Right"); break;
+        case 40: alert("Down"); break;
+    }
+}
+
+function addNumbers() {
+    
+}    
+
+function random_box() {
+
+}
 draw_board();
+
