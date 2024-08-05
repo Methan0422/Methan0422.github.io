@@ -36,6 +36,18 @@ function draw_board() {
         }
     }
 }
+function rotate() {
+    let newBoard = [];
+    for (let i =3; i>=0; i--) {
+        let row = [];
+        for (let j = 0; j<4; j++) {
+            row.push(board[j][i]);
+        }
+        newBoard.push(row);
+    }
+    board = newBoard
+}
+
 
 
 function check(e) {
@@ -44,8 +56,9 @@ function check(e) {
         case 37: alert("Left"); break
         case 38: alert("Up"); break;
         case 39: alert("Right"); break;
-        case 40: alert("Down"); break;
+        case 40: rotate(); break;
     }
+    draw_board();
 }
 
 function addNumbers() {
