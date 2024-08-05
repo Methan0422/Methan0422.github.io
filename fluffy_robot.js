@@ -3,70 +3,89 @@ let dom_score = document.querySelector("#score");
 let dom_canvas = document.querySelector("#canvas");
 let CTX = dom_canvas.getContext("2d");
 
-window.addEventListener('keydown',this.check,false);
+window.addEventListener('keydown', this.check, false);
 
 const W = (dom_canvas.width = 500);
 const H = (dom_canvas.height = 500);
-const SW = (W/4);
-const SH = (H/4);
+const SW = (W / 4);
+const SH = (H / 4);
 CTX.font = "30px Comic_Sans";
 CTX.textAlign = "center";
 
 let board = [];
-for (let i = 0; i<4; i++) {
+for (let i = 0; i < 4; i++) {
     let row = []
-    for (let j = 0; j<4; j++) {
-        row.push(i * 4 + j)
+    for (let j = 0; j < 4; j++) {
+        row.push(0);
     }
     board.push(row);
 }
 
 console.log(board);
 function draw_board() {
-    for (let i = 0; i<4; i++) {
-        for (let j = 0; j<4; j++) {
+    for (let i = 0; i < 4; i++) {
+        for (let j = 0; j < 4; j++) {
             CTX.beginPath();
             CTX.fillStyle = "#ffcc99";
             CTX.fillRect(j * SW, i * SH, SW, SH);
             CTX.fillStyle = "white";
             CTX.strokeStyle = "white";
             CTX.rect(j * SW, i * SH, SW, SH);
-            CTX.fillText(board[i][j],j*SW + SW/2, i*SH + SH/2 +5);
+            CTX.fillText(board[i][j], j * SW + SW / 2, i * SH + SH / 2 + 5);
             CTX.stroke();
         }
     }
 }
 function rotate() {
     let newBoard = [];
-    for (let i =3; i>=0; i--) {
+    for (let i = 3; i >= 0; i--) {
         let row = [];
-        for (let j = 0; j<4; j++) {
+        for (let j = 0; j < 4; j++) {
             row.push(board[j][i]);
         }
         newBoard.push(row);
     }
-    board = newBoard
+    board = newBoard;
 }
 
-
+function squish() {
+    for (let i = 0; i < 4; i++) {
+        for (let j = 0; j < 4; j++) {
+            if (board[i][j] == 0) {
+                board[i].splice(j, 1);
+                j--;
+            }
+        }
+        while (board[i].length < 4) {
+            board[i].push(0);
+        }
+    }
+}
 
 function check(e) {
     var code = e.keyCode;
     switch (code) {
-        case 37: alert("Left"); break
-        case 38: alert("Up"); break;
-        case 39: alert("Right"); break;
-        case 40: rotate(); break;
+        case 37: squish(); break
+        case 38: rotate(); squish(); rotate(); rotate(); rotate(); break;
+        case 39: rotate(); rotate(); squish(); rotate(); rotate(); break;
+        case 40: rotate(); rotate(); rotate(); squish(); rotate(); break;
     }
+    random_box();
     draw_board();
 }
 
-function addNumbers() {
-    
-}    
-
 function random_box() {
-
+    let daniel = [];
+    for(i = 0; i<4; i++) {
+        for(j = 0; j<4; j++) {
+            if(board[i][j] == 0) {
+                daniel.push([i,j]);
+            }
+        }
+    }
+    let chosen_one = daniel[Math.round(Math.random() * daniel.length)];
+    board[chosen_one[0]][chosen_one[1]] = 2;
 }
+random_box();
 draw_board();
 
