@@ -65,10 +65,10 @@ function squish() {
 function check(e) {
     var code = e.keyCode;
     switch (code) {
-        case 37: squish(); break
-        case 38: rotate(); squish(); rotate(); rotate(); rotate(); break;
-        case 39: rotate(); rotate(); squish(); rotate(); rotate(); break;
-        case 40: rotate(); rotate(); rotate(); squish(); rotate(); break;
+        case 37: squish(); add_boxes(); squish(); break
+        case 38: rotate(); squish(); add_boxes(); squish(); rotate(); rotate(); rotate(); break;
+        case 39: rotate(); rotate(); squish(); add_boxes(); squish(); rotate(); rotate(); break;
+        case 40: rotate(); rotate(); rotate(); squish(); add_boxes(); squish(); rotate(); break;
     }
     random_box();
     draw_board();
@@ -85,6 +85,17 @@ function random_box() {
     }
     let chosen_one = daniel[Math.round(Math.random() * daniel.length)];
     board[chosen_one[0]][chosen_one[1]] = 2;
+}
+
+function add_boxes() {
+    for(let i = 0; i<4; i++) {
+        for(let j = 0; j<4; j++) {
+            if(board[i][j] == board[i][j+1]) {
+                board[i][j] = board[i][j] * 2;
+                board[i][j+1] = 0;
+            }
+        }
+    }
 }
 random_box();
 draw_board();
