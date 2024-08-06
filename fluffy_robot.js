@@ -36,8 +36,17 @@ function draw_board() {
     for (let i = 0; i < 4; i++) {
         for (let j = 0; j < 4; j++) {
             CTX.beginPath();
-            CTX.fillStyle = "#ffcc99";
-            CTX.fillRect(j * SW, i * SH, SW, SH);
+            if(board[i][j] == 0) {
+                CTX.fillStyle = "#ffcc99";
+                CTX.fillRect(j * SW, i * SH, SW, SH);
+            }
+            if(board[i][j] > 0) {
+                let r = Math.log2(board[i][j]) / 12 * -57 + 234;
+                let g = Math.log2(board[i][j]) / 12 * -66 + 192;
+                let b = Math.log2(board[i][j]) / 12 * 6 + 25;
+                CTX.fillStyle = "rgba(" + r +", " + g + ", " + b + ", 1)";
+                CTX.fillRect(j * SW, i * SH, SW, SH);
+            }
             CTX.fillStyle = "white";
             CTX.strokeStyle = "white";
             CTX.rect(j * SW, i * SH, SW, SH);
@@ -108,12 +117,17 @@ function add_boxes() {
     }
 }
 
-//function color_change(color_value) {
-//    let r = color_value / 4096 *
-//   let g = 1;
-//    let b = 1;
-//    color_value / 4096 
-//}
+// function color_change(color_value) {
+//     let r = Math.log2(color_value) / 12 * -57 + 234
+//     let g = Math.log2(color_value) / 12 * -66 + 192
+//     let b = Math.log2(color_value) / 12 * 6 + 25
+//     if(color_value == 0) {
+//         ctx.fillStyle = "#ffcc99";
+//     }
+//     if(color_value > 0) {
+//         ctx.fillStyle = "rgba(r, g, b, 1)";
+//     }  
+// }
 random_box();
 draw_board();
 
