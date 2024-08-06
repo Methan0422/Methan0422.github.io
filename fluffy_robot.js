@@ -15,20 +15,24 @@ const end = {
     g:126,
     b:31,
 }
+let score = 0
 const W = (dom_canvas.width = 500);
 const H = (dom_canvas.height = 500);
 const SW = (W / 4);
 const SH = (H / 4);
-CTX.font = "30px Comic_Sans";
+CTX.font = "30px Comic Sans";
 CTX.textAlign = "center";
 
 let board = [];
-for (let i = 0; i < 4; i++) {
-    let row = []
-    for (let j = 0; j < 4; j++) {
-        row.push(0);
-    }
-    board.push(row);
+function reset() {
+    board = [];
+    for (let i = 0; i < 4; i++) {
+        let row = []
+        for (let j = 0; j < 4; j++) {
+            row.push(0);
+        }
+        board.push(row);
+}
 }
 
 console.log(board);
@@ -46,11 +50,11 @@ function draw_board() {
                 let b = Math.log2(board[i][j]) / 12 * 6 + 25;
                 CTX.fillStyle = "rgba(" + r +", " + g + ", " + b + ", 1)";
                 CTX.fillRect(j * SW, i * SH, SW, SH);
+                CTX.fillStyle = "white";
+                CTX.fillText(board[i][j], j * SW + SW / 2, i * SH + SH / 2 + 5);
             }
-            CTX.fillStyle = "white";
             CTX.strokeStyle = "white";
             CTX.rect(j * SW, i * SH, SW, SH);
-            CTX.fillText(board[i][j], j * SW + SW / 2, i * SH + SH / 2 + 5);
             CTX.stroke();
         }
     }
@@ -84,10 +88,10 @@ function squish() {
 function check(e) {
     var code = e.keyCode;
     switch (code) {
-        case 37: squish(); add_boxes(); squish(); break
-        case 38: rotate(); squish(); add_boxes(); squish(); rotate(); rotate(); rotate(); break;
-        case 39: rotate(); rotate(); squish(); add_boxes(); squish(); rotate(); rotate(); break;
-        case 40: rotate(); rotate(); rotate(); squish(); add_boxes(); squish(); rotate(); break;
+        case 37: squish(); add_boxes(); squish(); draw_board(); break
+        case 38: rotate(); squish(); add_boxes(); squish(); rotate(); rotate(); rotate(); draw_board(); break;
+        case 39: rotate(); rotate(); squish(); add_boxes(); squish(); rotate(); rotate(); draw_board(); break;
+        case 40: rotate(); rotate(); rotate(); squish(); add_boxes(); squish(); rotate(); draw_board(); break;
     }
     random_box();
     draw_board();
@@ -106,28 +110,29 @@ function random_box() {
     board[chosen_one[0]][chosen_one[1]] = 2;
 }
 
+
 function add_boxes() {
     for(let i = 0; i<4; i++) {
         for(let j = 0; j<4; j++) {
             if(board[i][j] == board[i][j+1]) {
                 board[i][j] = board[i][j] * 2;
                 board[i][j+1] = 0;
+                score = score + board[i][j];
+                dom_score.innerHTML = score.toString();
             }
         }
     }
 }
 
-// function color_change(color_value) {
-//     let r = Math.log2(color_value) / 12 * -57 + 234
-//     let g = Math.log2(color_value) / 12 * -66 + 192
-//     let b = Math.log2(color_value) / 12 * 6 + 25
-//     if(color_value == 0) {
-//         ctx.fillStyle = "#ffcc99";
-//     }
-//     if(color_value > 0) {
-//         ctx.fillStyle = "rgba(r, g, b, 1)";
-//     }  
-// }
+dom_replay.addEventListener("click", () => {
+    reset();
+    random_box();
+    draw_board();
+});
+
+reset();
 random_box();
 draw_board();
+
+
 
