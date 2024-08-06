@@ -1,6 +1,7 @@
 let dom_replay = document.querySelector("#replay");
 let dom_score = document.querySelector("#score");
 let dom_canvas = document.querySelector("#canvas");
+let dom_win = document.querySelector("win");
 let CTX = dom_canvas.getContext("2d");
 
 window.addEventListener('keydown', this.check, false);
@@ -89,7 +90,7 @@ function check(e) {
     let prev = board;
     var code = e.keyCode;
     switch (code) {
-        case 37: squish(); add_boxes(); squish(); draw_board(); break
+        case 37: rotate(); rotate(); rotate(); rotate(); squish(); add_boxes(); squish(); draw_board(); break
         case 38: rotate(); squish(); add_boxes(); squish(); rotate(); rotate(); rotate(); draw_board(); break;
         case 39: rotate(); rotate(); squish(); add_boxes(); squish(); rotate(); rotate(); draw_board(); break;
         case 40: rotate(); rotate(); rotate(); squish(); add_boxes(); squish(); rotate(); draw_board(); break;
@@ -127,6 +128,10 @@ function add_boxes() {
                 board[i][j+1] = 0;
                 score = score + board[i][j];
                 dom_score.innerHTML = score.toString();
+                if (board[i][j] == 32) {
+                    alert("win")
+                    dom_win.style = "display: block;"
+                }
             }
         }
     }
