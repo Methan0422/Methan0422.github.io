@@ -86,6 +86,7 @@ function squish() {
 }
 
 function check(e) {
+    let prev = board;
     var code = e.keyCode;
     switch (code) {
         case 37: squish(); add_boxes(); squish(); draw_board(); break
@@ -93,8 +94,15 @@ function check(e) {
         case 39: rotate(); rotate(); squish(); add_boxes(); squish(); rotate(); rotate(); draw_board(); break;
         case 40: rotate(); rotate(); rotate(); squish(); add_boxes(); squish(); rotate(); draw_board(); break;
     }
-    random_box();
-    draw_board();
+    for (let i = 0; i<4; i++) {
+        for (let j = 0; j<4; j++) {
+            if (prev[i][j] != board[i][j]) {
+                random_box();
+                draw_board();
+                return;
+            }
+        }
+    }
 }
 
 function random_box() {
@@ -133,6 +141,3 @@ dom_replay.addEventListener("click", () => {
 reset();
 random_box();
 draw_board();
-
-
-
