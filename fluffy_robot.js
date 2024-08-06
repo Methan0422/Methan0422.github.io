@@ -108,12 +108,12 @@ function add_boxes() {
     }
 }
 
-function color_change(color_value) {
-    let r = color_value / 4096 *
-    let g = 1;
-    let b = 1;
-    color_value / 4096 
-}
+//function color_change(color_value) {
+//    let r = color_value / 4096 *
+//   let g = 1;
+//    let b = 1;
+//    color_value / 4096 
+//}
 random_box();
 draw_board();
 
