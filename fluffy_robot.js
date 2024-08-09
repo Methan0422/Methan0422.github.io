@@ -5,6 +5,7 @@ let dom_win = document.querySelector("#win");
 let dom_new = document.querySelector("#new");
 let dom_continue = document.querySelector("#continue");
 let CTX = dom_canvas.getContext("2d");
+let dom_lose =document.querySelector("#lose");
 
 window.addEventListener('keydown', this.check, false);
 
@@ -26,6 +27,8 @@ const SH = (H / 4);
 CTX.font = "30px Comic Sans";
 CTX.textAlign = "center";
 
+dom_lose.style.display = 'block';
+
 let board = [];
 function reset() {
     board = [];
@@ -38,6 +41,7 @@ function reset() {
         
     }
     score = 0;
+    dom_score.innerHTML = score.toString();
     dom_win.style.display = 'none';
 }
 
@@ -92,8 +96,11 @@ function squish() {
         }
     }
 }
-
+let menu = true;
 function check(e) {
+    if (menu == false) {
+        return
+    }
     let prev = board;
     var code = e.keyCode;
     switch (code) {
@@ -110,6 +117,11 @@ function check(e) {
                 return;
             }
         }
+    }
+    if (lose() == false) {
+        dom_lose.style.display = 'block';
+        menu = false;
+
     }
 }
 
@@ -135,8 +147,9 @@ function add_boxes() {
                 board[i][j+1] = 0;
                 score = score + board[i][j];
                 dom_score.innerHTML = score.toString();
-                if (board[i][j] == 32) {
+                if (board[i][j] == 2048) {
                     dom_win.style.display = 'block';
+                    menu = false;
                 }
             }
         }
@@ -153,11 +166,33 @@ dom_new.addEventListener("click", () => {
     reset();
     random_box();
     draw_board();
+    dom_lose.style.display = 'none';
+    menu = true;
 })
 
 dom_continue.addEventListener("click", ()=> {
     dom_win.style.display = 'none';
+    menu = true;
 })
+
+function lose() {
+    for(i = 0; i<4; i++) {
+        for(j = 0; j<4; j++) {
+            if(board[i][j] == 0) {
+                return true
+            }}}
+    for (let i = 0; i<4; i++) {
+        rotate();
+        for (let j = 0; j<4; j++) {
+            for (let k = 0; k<4; k++) {
+                if(board[j][k] == board[j][k+1]) {
+                    return true
+                }
+            }
+        }
+    }
+    return false
+}
 
 reset();
 random_box();
