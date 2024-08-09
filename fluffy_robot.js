@@ -5,7 +5,9 @@ let dom_win = document.querySelector("#win");
 let dom_new = document.querySelector("#new");
 let dom_continue = document.querySelector("#continue");
 let CTX = dom_canvas.getContext("2d");
-let dom_lose =document.querySelector("#lose");
+let dom_lose = document.querySelector("#lose");
+let dom_newgame = document.querySelector("#newgame");
+let dom_highscore = document.querySelector("#highScore");
 
 window.addEventListener('keydown', this.check, false);
 
@@ -27,7 +29,7 @@ const SH = (H / 4);
 CTX.font = "30px Comic Sans";
 CTX.textAlign = "center";
 
-dom_lose.style.display = 'block';
+// dom_lose.style.display = 'block';
 
 let board = [];
 function reset() {
@@ -104,6 +106,8 @@ function check(e) {
     let prev = board;
     var code = e.keyCode;
     switch (code) {
+        case 83: dom_win.style.display = 'block'; break
+        case 65: dom_lose.style.display = 'block'; break
         case 37: rotate(); rotate(); rotate(); rotate(); squish(); add_boxes(); squish(); draw_board(); break
         case 38: rotate(); squish(); add_boxes(); squish(); rotate(); rotate(); rotate(); draw_board(); break;
         case 39: rotate(); rotate(); squish(); add_boxes(); squish(); rotate(); rotate(); draw_board(); break;
@@ -146,6 +150,11 @@ function add_boxes() {
                 board[i][j] = board[i][j] * 2;
                 board[i][j+1] = 0;
                 score = score + board[i][j];
+                if (score > localStorage.getItem("highScore")) {
+                    localStorage.setItem("highScore", score);
+                    dom_highscore.innerHTML = score.toString();
+                    draw_board();
+                }
                 dom_score.innerHTML = score.toString();
                 if (board[i][j] == 2048) {
                     dom_win.style.display = 'block';
@@ -160,6 +169,14 @@ dom_replay.addEventListener("click", () => {
     reset();
     random_box();
     draw_board();
+    dom_lose.style.display = 'none';
+});
+
+dom_newgame.addEventListener("click", () => {
+    reset();
+    random_box();
+    draw_board();
+    dom_lose.style.display = 'none';
 });
 
 dom_new.addEventListener("click", () => {
@@ -193,6 +210,7 @@ function lose() {
     }
     return false
 }
+localStorage.setItem("highScore", 0);
 
 reset();
 random_box();

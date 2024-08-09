@@ -28,7 +28,7 @@ canvas{
 }
 #score{
     margin-top: 10px;
-    font-size: 40px;
+    font-size: 30px;
     font-weight: 800;
 }
 .noseLect{
@@ -73,6 +73,7 @@ canvas{
 #author{
     text-align: center;
     padding-bottom: 10px;
+    font-size: 30px;
 }
 #win{
     width: 400px;
@@ -143,8 +144,9 @@ canvas{
     font-size: 40px;
     font-weight: 800;
     text-align: center;
+    
 }
-#replay{
+#newgame{
     width: 140px;
     height: 50px;
     position:absolute;
@@ -158,4 +160,13 @@ canvas{
     font-weight: 800;
     cursor: pointer;
     transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+#highScore{
+    font-size: 20px;
+    font-weight: 400;
+}
+#id{
+    text-align: center;
+    font-size: 30px;
+    margin-top: 10px;
 }
