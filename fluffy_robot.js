@@ -108,6 +108,8 @@ function check(e) {
     switch (code) {
         case 83: dom_win.style.display = 'block'; break
         case 65: dom_lose.style.display = 'block'; break
+        case 70: localStorage.setItem("highScore", 29452); dom_highscore.innerHTML = 29452; break
+        case 68: localStorage.setItem("highScore", 0); dom_highscore.innerHTML = 0; break
         case 37: rotate(); rotate(); rotate(); rotate(); squish(); add_boxes(); squish(); draw_board(); break
         case 38: rotate(); squish(); add_boxes(); squish(); rotate(); rotate(); rotate(); draw_board(); break;
         case 39: rotate(); rotate(); squish(); add_boxes(); squish(); rotate(); rotate(); draw_board(); break;
