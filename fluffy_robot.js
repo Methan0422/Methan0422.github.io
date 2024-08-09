@@ -1,7 +1,9 @@
 let dom_replay = document.querySelector("#replay");
 let dom_score = document.querySelector("#score");
 let dom_canvas = document.querySelector("#canvas");
-let dom_win = document.querySelector("win");
+let dom_win = document.querySelector("#win");
+let dom_new = document.querySelector("#new");
+let dom_continue = document.querySelector("#continue");
 let CTX = dom_canvas.getContext("2d");
 
 window.addEventListener('keydown', this.check, false);
@@ -33,7 +35,10 @@ function reset() {
             row.push(0);
         }
         board.push(row);
-}
+        
+    }
+    score = 0;
+    dom_win.style.display = 'none';
 }
 
 console.log(board);
@@ -42,7 +47,8 @@ function draw_board() {
         for (let j = 0; j < 4; j++) {
             CTX.beginPath();
             if(board[i][j] == 0) {
-                CTX.fillStyle = "#ffcc99";
+                CTX.fillStyle = "#E3CAA0";
+                //#E3CAA0 #ffcc99
                 CTX.fillRect(j * SW, i * SH, SW, SH);
             }
             if(board[i][j] > 0) {
@@ -54,7 +60,8 @@ function draw_board() {
                 CTX.fillStyle = "white";
                 CTX.fillText(board[i][j], j * SW + SW / 2, i * SH + SH / 2 + 5);
             }
-            CTX.strokeStyle = "white";
+            CTX.strokeStyle = "#BDA989";
+            CTX.lineWidth = 5;
             CTX.rect(j * SW, i * SH, SW, SH);
             CTX.stroke();
         }
@@ -129,8 +136,7 @@ function add_boxes() {
                 score = score + board[i][j];
                 dom_score.innerHTML = score.toString();
                 if (board[i][j] == 32) {
-                    alert("win")
-                    dom_win.style = "display: block;"
+                    dom_win.style.display = 'block';
                 }
             }
         }
@@ -142,6 +148,16 @@ dom_replay.addEventListener("click", () => {
     random_box();
     draw_board();
 });
+
+dom_new.addEventListener("click", () => {
+    reset();
+    random_box();
+    draw_board();
+})
+
+dom_continue.addEventListener("click", ()=> {
+    dom_win.style.display = 'none';
+})
 
 reset();
 random_box();
