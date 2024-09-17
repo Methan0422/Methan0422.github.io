@@ -144,7 +144,6 @@ function random_box() {
     board[chosen_one[0]][chosen_one[1]] = 2;
 }
 
-
 function add_boxes() {
     for(let i = 0; i<4; i++) {
         for(let j = 0; j<4; j++) {
