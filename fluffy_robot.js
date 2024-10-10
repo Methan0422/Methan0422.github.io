@@ -58,6 +58,7 @@ function draw_board() {
                 CTX.fillRect(j * SW, i * SH, SW, SH);
             }
             if(board[i][j] > 0) {
+                //Get Better Colors
                 let r = Math.log2(board[i][j]) / 12 * -57 + 234;
                 let g = Math.log2(board[i][j]) / 12 * -66 + 192;
                 let b = Math.log2(board[i][j]) / 12 * 6 + 25;
